@@ -134,7 +134,7 @@ function update() {
       dropspeed = dropspeed/1.005;
     }
 
-    if((Math.abs(shiftspeed)<.005) && (Math.abs(dropspeed)<.005)){
+    if((Math.abs(shiftspeed)<.01) && (Math.abs(dropspeed)<.01)){
       console.log("zero");
       shiftspeed = 0;
       dropspeed = 0;
@@ -186,10 +186,20 @@ function update() {
     pins.forEach((p) => {
       if (abs(s.pos.y - p.pos.y) < 4 && abs(s.pos.x - p.pos.x) < 4 && s != p) {
         //console.log("collision");
-        s.vx = shiftspeed;
-        s.vy = dropspeed;
+        s.vx = p.vx;
+        s.vy = p.vy;
       }
     });
+
+    pins.forEach((p) => {
+      if (p.vy!= 0){
+        p.vy = p.vy /1.001;
+      }
+      if (p.vx != 0){
+        p.vx = p.vx/1.001;
+      }
+    });
+
 
     //collision with walls
     if (s.pos.x < G.WIDTH/16 || s.pos.x > 15*G.WIDTH/16) {
