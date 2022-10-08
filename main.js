@@ -1,7 +1,8 @@
-title = "";
+title = "Pool Game";
 
 description = `
-`;
+[Hold] Charge Ball
+[Release] Shoot Ball`;
 
 characters = [];
 
@@ -12,6 +13,9 @@ const G = {
 
 options = {
   viewSize: {x: G.WIDTH, y: G.HEIGHT},
+  isReplayEnabled: true,
+  isDrawingScoreFront: true,
+
 };
 
 /** @type {{angle: number, length: number, pin: Vector}} */
