@@ -1,17 +1,21 @@
-title = "";
+title = "Pool Game";
 
 description = `
-`;
+[Hold] Charge Ball
+[Release] Shoot Ball`;
 
 characters = [];
 
 const G = {
-  WIDTH: 100,
-  HEIGHT: 100,
+  WIDTH: 150,
+  HEIGHT: 250,
 };
 
 options = {
   viewSize: {x: G.WIDTH, y: G.HEIGHT},
+  isReplayEnabled: true,
+  isDrawingScoreFront: true,
+
 };
 
 /** @type {{angle: number, length: number, pin: Vector}} */
@@ -30,7 +34,7 @@ let launch = 0;
 
 /**
 * @typedef {{
-* pos: Vector
+* pos: Vector, vx: number, vy: number,
 * }} Pin
 */
 
@@ -45,20 +49,23 @@ function update() {
     projection = { angle: 0, length: projlen, pin: ball };
 
     pins = [];
-    let heightPos = G.HEIGHT/3;
+    let heightPos = G.HEIGHT/2;
     let widthPos = G.WIDTH/2;
     for (let y = 1; y < 5; y++) {
       let widthDis = widthPos;
       for (let x = 0; x < y; x++) {
         pins.push({
-          pos: vec(widthDis, heightPos)
+          pos: vec(widthDis, heightPos),
+          vx: 0,
+          vy: 0
         });
-        widthDis += G.WIDTH/10
+        widthDis += G.WIDTH/15
       } 
-      widthPos -= G.WIDTH/20;
-      heightPos -= G.HEIGHT/20;
+      widthPos -= G.WIDTH/30;
+      heightPos -= G.HEIGHT/50;
     }
   }
+
   if ( switching == false){
     projection.angle -= 0.05;
   }
@@ -77,9 +84,6 @@ function update() {
     switching = false;
   }
 
-
-  line(projection.pin, vec(projection.pin).addWithAngle(projection.angle, projection.length));
-
   if(input.isPressed && charge<0.15 && shot == false){
     charge+=.003;
     shiftspeed += charge;
@@ -91,7 +95,7 @@ function update() {
     shot = true;
     projection.length = 0;
     //console.log("PROJECTION CHECK")
-    console.log(projection.angle);
+    //console.log(projection.angle);
     manipshift = 1.5 - Math.abs(projection.angle)  
     if(projection.angle < -1.5){
      //shiftspeed *= (projection.angle);
@@ -109,13 +113,13 @@ function update() {
       dropspeed *=  manipdrop;
     }
   }
-  if (ball.x <=10 || Math.round(ball.x >= 90)){
+  if (ball.x <= G.WIDTH/16 || Math.round(ball.x >= 15*G.WIDTH/16)){
     bonks -= 0.01;
     //ball.x = 10;
     shiftspeed *= -1 ; 
     //dropspeed *= -1;
   }
-  if (ball.y <=10 || Math.round(ball.y >= 90) ){
+  if (ball.y <=1.3*G.HEIGHT/8 || Math.round(ball.y >= 7.7*G.HEIGHT/8) ){
     bonks-= 0.01;
     //ball.x = 10;
     dropspeed *= -1 ;
@@ -138,8 +142,6 @@ function update() {
     }
     ball.y += dropspeed;
     ball.x += shiftspeed;
-    box(ball, 3);
-    
     //console.log(charge);
   }
 
@@ -150,9 +152,31 @@ function update() {
     //box(ball, 3);
   }
 
+  //Board
+  color("green");
+  rect(0, G.HEIGHT/8, G.WIDTH, 8*G.HEIGHT/8);
+  color("black");
+  rect(0, G.HEIGHT/8, G.WIDTH, G.HEIGHT/20);
+  rect(0, G.HEIGHT/8, G.WIDTH/14, G.HEIGHT);
+  rect(G.WIDTH, G.HEIGHT, -G.WIDTH, -G.HEIGHT/20);
+  rect(G.WIDTH, G.HEIGHT, -G.WIDTH/14, -7*G.HEIGHT/8);
+  color("purple");
+  rect(G.WIDTH/15, 1.4*G.HEIGHT/8, G.WIDTH/12, G.WIDTH/12);
+  rect(12.8*G.WIDTH/15, 1.4*G.HEIGHT/8, G.WIDTH/12, G.WIDTH/12);
+  rect(G.WIDTH/15, 7.25*G.HEIGHT/8, G.WIDTH/12, G.WIDTH/12);
+  rect(12.8*G.WIDTH/15, 7.25*G.HEIGHT/8, G.WIDTH/12, G.WIDTH/12);
+  //Projection Line
+  color("light_black");
+  line(projection.pin, vec(projection.pin).addWithAngle(projection.angle, projection.length));
+  //Ball
+  color("blue");
+  box(ball, 3);
+  //Pins(other balls)
+  color("red");
   pins.forEach((s) => {
-    rect(s.pos.x - 1, s.pos.y - 1, 2, 2);
+    rect(s.pos.x - 1, s.pos.y - 1, 3, 3);
   });
+  
   
 }
 addEventListener("load", onLoad);
