@@ -63,7 +63,7 @@ function update() {
     projection.angle -= 0.05;
   }
   else if( switching == true){
-    //console.log("helo")
+    console.log("helo")
     projection.angle += 0.05;
     //console.log(Math.round(projection.angle))
   }
@@ -73,7 +73,7 @@ function update() {
   }
   if(Math.round(projection.angle) > 0){
     //console.log(Math.round(projection.angle))
-    //console.log("yo")
+    console.log("yo")
     switching = false;
   }
 
@@ -90,33 +90,49 @@ function update() {
   if(input.isJustReleased && shot ==false){
     shot = true;
     projection.length = 0;
+    //console.log("PROJECTION CHECK")
     console.log(projection.angle);
+    manipshift = 1.5 - Math.abs(projection.angle)  
     if(projection.angle < -1.5){
-     shiftspeed *= projection.angle - 1.5;
+     //shiftspeed *= (projection.angle);
+     shiftspeed *=  manipshift;
+     manipdrop = -3 - projection.angle;
+     dropspeed *=  manipdrop;
      console.log("PROJECTION CHECK")
-     
+    }
+    else if(Math.round(projection.angle == -1.5)){
+      shiftspeed =0; 
     }
     else{
-      shiftspeed *= projection.angle + 1.5;
+      shiftspeed *= 1 * manipshift;
+      manipdrop = 0 + projection.angle;
+      dropspeed *=  manipdrop;
     }
   }
   if (ball.x <=10 || Math.round(ball.x >= 90)){
-    bonks += 0.02;
+    bonks -= 0.01;
     //ball.x = 10;
     shiftspeed *= -1 ; 
     //dropspeed *= -1;
   }
   if (ball.y <=10 || Math.round(ball.y >= 90) ){
-    bonks+= 0.01;
+    bonks-= 0.01;
     //ball.x = 10;
     dropspeed *= -1  ;
     //dropspeed *= -1;
   }
   if (shot == true) {
+    if (shiftspeed != 0){
+      shiftspeed = shiftspeed /1.005;
+    }
+    if (dropspeed != 0){
+      dropspeed = dropspeed/1.005;
+    }
     ball.y += dropspeed;
     ball.x += shiftspeed;
     box(ball, 3);
-    console.log(charge);
+    
+    //console.log(charge);
   }
 
   if (shot == false){
