@@ -225,14 +225,30 @@ function update() {
       s.vy *= -1;
     }
 
+    if (abs(1.4*G.WIDTH/13 - s.pos.x) < 4.9 && abs(3.1*G.HEIGHT/16 - s.pos.y) < 4.9) { //top-left
+      pins.pop(s);
+      addScore(1);
+    }
+    else if (abs(11.7*G.WIDTH/13 - s.pos.x) < 4.9 && abs(3.1*G.HEIGHT/16 - s.pos.y) < 4.9) { //top-right
+      pins.pop(s);
+      addScore(1);
+    }
+    else if (abs(1.4*G.WIDTH/13 - s.pos.x) < 4.9 && abs(14.9*G.HEIGHT/16 - s.pos.y) < 4.9) { //bottom-left
+      pins.pop(s);
+      addScore(1);
+    }
+    else if (abs(11.7*G.WIDTH/13 - s.pos.x) < 4.9 && abs(14.9*G.HEIGHT/16 - s.pos.y) < 4.9) { //bottom-right
+      pins.pop(s);
+      addScore(1);
+    }
+
     s.pos.x += s.vx;
     s.pos.y += s.vy;
 
     box(s.pos, 4);
   });
 
-  color("yellow");
-  rect(11.7*G.WIDTH/13, 14.9*G.HEIGHT/16, 1, 1)
+  //end game if ball goes in hole
   if (abs(1.4*G.WIDTH/13 - ball.x) < 4.9 && abs(3.1*G.HEIGHT/16 - ball.y) < 4.9) { //top-left
     end();
   }
