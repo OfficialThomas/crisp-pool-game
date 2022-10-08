@@ -5,7 +5,14 @@ description = `
 
 characters = [];
 
-options = {};
+const G = {
+  WIDTH: 100,
+  HEIGHT: 100,
+};
+
+options = {
+  viewSize: {x: G.WIDTH, y: G.HEIGHT},
+};
 
 /** @type {{angle: number, length: number, pin: Vector}} */
 let projection;
@@ -21,26 +28,52 @@ let shot = false;
 let switching = false;
 let launch = 0;
 
+/**
+* @typedef {{
+* pos: Vector
+* }} Pin
+*/
+
+/**
+* @type  { Pin [] }
+*/
+let pins = [];
+
 function update() {
   if (!ticks) {
-    ball = vec(50, 89);
+    ball = vec(G.WIDTH/2, 4 * G.HEIGHT/5);
     projection = { angle: 0, length: projlen, pin: ball };
+
+    pins = [];
+    let heightPos = G.HEIGHT/3;
+    let widthPos = G.WIDTH/2;
+    for (let y = 1; y < 5; y++) {
+      let widthDis = widthPos;
+      for (let x = 0; x < y; x++) {
+        pins.push({
+          pos: vec(widthDis, heightPos)
+        });
+        widthDis += G.WIDTH/10
+      } 
+      widthPos -= G.WIDTH/20;
+      heightPos -= G.HEIGHT/20;
+    }
   }
   if ( switching == false){
     projection.angle -= 0.05;
   }
   else if( switching == true){
-    console.log("helo")
+    //console.log("helo")
     projection.angle += 0.05;
     //console.log(Math.round(projection.angle))
   }
   if (Math.round(projection.angle) < -3){
-    console.log(Math.round(projection.angle))
+    //console.log(Math.round(projection.angle))
     switching = true;
   }
   if(Math.round(projection.angle) > 0){
-    console.log(Math.round(projection.angle))
-    console.log("yo")
+    //console.log(Math.round(projection.angle))
+    //console.log("yo")
     switching = false;
   }
 
@@ -90,6 +123,9 @@ function update() {
     box(ball, 3);
   }
 
+  pins.forEach((s) => {
+    rect(s.pos.x - 1, s.pos.y - 1, 2, 2);
+  });
   
 }
 addEventListener("load", onLoad);
