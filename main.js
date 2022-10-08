@@ -119,11 +119,24 @@ function update() {
   if (ball.x < G.WIDTH/16 || ball.x > 15*G.WIDTH/16){
     bonks -= 0.01;
     //ball.x = 10;
+    if (ball.x < G.WIDTH/16){
+      ball.x += 1;
+    }
+    else{
+      ball.x -= 1;
+    }
     shiftspeed *= -1 ; 
+
     //dropspeed *= -1;
   }
   if (ball.y < 1.3*G.HEIGHT/8 || ball.y > 7.7*G.HEIGHT/8 ){
     bonks-= 0.01;
+    if(ball.y < 1.3*G.HEIGHT/8 ){
+      ball.y += 1;
+    }
+    else{
+      ball.y -= 1;
+    }
     //ball.x = 10;
     dropspeed *= -1 ;
     //dropspeed *= -1;
