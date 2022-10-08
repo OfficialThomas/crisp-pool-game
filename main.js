@@ -146,8 +146,8 @@ function update() {
   }
 
   if (shot == false){
-    ball.x =G.WIDTH/2 
-    ball.y = 4 * G.HEIGHT/5
+    //ball.x = ball.x; //G.WIDTH/2 
+    //ball.y = ball.y; //4 * G.HEIGHT/5
     projection.length = 7;
     //box(ball, 3);
   }
