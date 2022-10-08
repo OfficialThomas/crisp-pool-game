@@ -135,7 +135,7 @@ function update() {
     }
 
     if((Math.abs(shiftspeed)<.01) && (Math.abs(dropspeed)<.01)){
-      console.log("zero");
+      //console.log("zero");
       shiftspeed = 0;
       dropspeed = 0;
       charge = 0;
@@ -226,6 +226,21 @@ function update() {
 
     box(s.pos, 4);
   });
+
+  color("yellow");
+  rect(11.7*G.WIDTH/13, 14.9*G.HEIGHT/16, 1, 1)
+  if (abs(1.4*G.WIDTH/13 - ball.x) < 4.9 && abs(3.1*G.HEIGHT/16 - ball.y) < 4.9) { //top-left
+    end();
+  }
+  else if (abs(11.7*G.WIDTH/13 - ball.x) < 4.9 && abs(3.1*G.HEIGHT/16 - ball.y) < 4.9) { //top-right
+    end();
+  }
+  else if (abs(1.4*G.WIDTH/13 - ball.x) < 4.9 && abs(14.9*G.HEIGHT/16 - ball.y) < 4.9) { //bottom-left
+    end();
+  }
+  else if (abs(11.7*G.WIDTH/13 - ball.x) < 4.9 && abs(14.9*G.HEIGHT/16 - ball.y) < 4.9) { //bottom-right
+    end();
+  }
   
 }
 addEventListener("load", onLoad);
