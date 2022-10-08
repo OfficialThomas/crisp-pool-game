@@ -34,7 +34,7 @@ let launch = 0;
 
 /**
 * @typedef {{
-* pos: Vector, vx: number, vy: number,
+* pos: Vector, vx: number, vy: number, start: Vector
 * }} Pin
 */
 
@@ -57,7 +57,8 @@ function update() {
         pins.push({
           pos: vec(widthDis, heightPos),
           vx: 0,
-          vy: 0
+          vy: 0,
+          start: vec(widthDis, heightPos)
         });
         widthDis += G.WIDTH/15
       } 
@@ -113,13 +114,13 @@ function update() {
       dropspeed *=  manipdrop;
     }
   }
-  if (ball.x <= G.WIDTH/16 || Math.round(ball.x >= 15*G.WIDTH/16)){
+  if (ball.x < G.WIDTH/16 || ball.x > 15*G.WIDTH/16){
     bonks -= 0.01;
     //ball.x = 10;
     shiftspeed *= -1 ; 
     //dropspeed *= -1;
   }
-  if (ball.y <=1.3*G.HEIGHT/8 || Math.round(ball.y >= 7.7*G.HEIGHT/8) ){
+  if (ball.y < 1.3*G.HEIGHT/8 || ball.y > 7.7*G.HEIGHT/8 ){
     bonks-= 0.01;
     //ball.x = 10;
     dropspeed *= -1 ;
@@ -174,10 +175,28 @@ function update() {
   //Pins(other balls)
   color("red");
   pins.forEach((s) => {
+    //collision with the ball
     if (abs(s.pos.y - ball.y) < 4 && abs(s.pos.x - ball.x) < 4) {
       //console.log("collision");
       s.vx = shiftspeed;
       s.vy = dropspeed;
+    }
+
+    //collision with other pins
+    pins.forEach((p) => {
+      if (abs(s.pos.y - p.pos.y) < 4 && abs(s.pos.x - p.pos.x) < 4 && s != p) {
+        //console.log("collision");
+        s.vx = shiftspeed;
+        s.vy = dropspeed;
+      }
+    });
+
+    //collision with walls
+    if (s.pos.x < G.WIDTH/16 || s.pos.x > 15*G.WIDTH/16) {
+      s.vx *= -1;
+    }
+    if (s.pos.y < 1.3*G.HEIGHT/8 || s.pos.y > 7.7*G.HEIGHT/8 ) {
+      s.vy *= -1;
     }
 
     s.pos.x += s.vx;
