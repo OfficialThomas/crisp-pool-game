@@ -61,6 +61,7 @@ function update() {
     if(projection.angle < -1.5){
      shiftspeed *= projection.angle - 1.5;
      console.log("PROJECTION CHECK")
+     
     }
     else{
       shiftspeed *= projection.angle + 1.5;
