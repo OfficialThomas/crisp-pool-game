@@ -13,4 +13,3 @@ function update() {
 }
 
 addEventListener("load", onLoad);
-//check
