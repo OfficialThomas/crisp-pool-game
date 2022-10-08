@@ -170,13 +170,21 @@ function update() {
   line(projection.pin, vec(projection.pin).addWithAngle(projection.angle, projection.length));
   //Ball
   color("blue");
-  box(ball, 3);
+  box(ball, 4);
   //Pins(other balls)
   color("red");
   pins.forEach((s) => {
-    rect(s.pos.x - 1, s.pos.y - 1, 3, 3);
+    if (abs(s.pos.y - ball.y) < 4 && abs(s.pos.x - ball.x) < 4) {
+      //console.log("collision");
+      s.vx = shiftspeed;
+      s.vy = dropspeed;
+    }
+
+    s.pos.x += s.vx;
+    s.pos.y += s.vy;
+
+    box(s.pos, 4);
   });
-  
   
 }
 addEventListener("load", onLoad);
