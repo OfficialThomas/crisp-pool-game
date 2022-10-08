@@ -186,11 +186,11 @@ function update() {
     pins.forEach((p) => {
       if (abs(s.pos.y - p.pos.y) < 4 && abs(s.pos.x - p.pos.x) < 4 && s != p) {
         //console.log("collision");
-        s.vx = p.vx;
+        s.vx = -p.vx;
         s.vy = p.vy;
       }
     });
-
+    //slows down pins over time
     pins.forEach((p) => {
       if (p.vy!= 0){
         p.vy = p.vy /1.001;
@@ -203,9 +203,21 @@ function update() {
 
     //collision with walls
     if (s.pos.x < G.WIDTH/16 || s.pos.x > 15*G.WIDTH/16) {
+      if (s.pos.x < G.WIDTH/16){
+        s.pos.x += 1
+      }
+      else{
+        s.pos.x -=1
+      }
       s.vx *= -1;
     }
     if (s.pos.y < 1.3*G.HEIGHT/8 || s.pos.y > 7.7*G.HEIGHT/8 ) {
+      if (s.pos.y < 1.3*G.HEIGHT/8) {
+        s.pos.y += 1
+      }
+      else{
+        s.pos.y -=1
+      }
       s.vy *= -1;
     }
 
