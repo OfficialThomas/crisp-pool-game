@@ -45,6 +45,8 @@ let pins = [];
 
 function update() {
   if (!ticks) {
+    shiftspeed = 0;
+    dropspeed = 0;
     ball = vec(G.WIDTH/2, 4 * G.HEIGHT/5);
     projection = { angle: 0, length: projlen, pin: ball };
 
