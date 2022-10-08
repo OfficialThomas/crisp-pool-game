@@ -176,18 +176,22 @@ function update() {
   color("red");
   pins.forEach((s) => {
     //collision with the ball
-    if (abs(s.pos.y - ball.y) < 4 && abs(s.pos.x - ball.x) < 4) {
+    if (abs(s.pos.y - ball.y) < 4 && abs(s.pos.x - ball.x) < 4 && shot == true) {
       //console.log("collision");
       s.vx = shiftspeed;
       s.vy = dropspeed;
+      shiftspeed *= -1;
+      dropspeed *=-1;
     }
 
     //collision with other pins
     pins.forEach((p) => {
       if (abs(s.pos.y - p.pos.y) < 4 && abs(s.pos.x - p.pos.x) < 4 && s != p) {
         //console.log("collision");
-        s.vx = -p.vx;
+        s.vx = p.vx;
         s.vy = p.vy;
+        p.vx *= -1;
+        p.vy *= -1;
       }
     });
     //slows down pins over time
