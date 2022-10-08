@@ -45,8 +45,6 @@ let pins = [];
 
 function update() {
   if (!ticks) {
-    shiftspeed = 0;
-    dropspeed = 0;
     ball = vec(G.WIDTH/2, 4 * G.HEIGHT/5);
     projection = { angle: 0, length: projlen, pin: ball };
 
@@ -228,18 +226,26 @@ function update() {
     }
 
     if (abs(1.4*G.WIDTH/13 - s.pos.x) < 4.9 && abs(3.1*G.HEIGHT/16 - s.pos.y) < 4.9) { //top-left
+      s.pos.x = G.WIDTH;
+      s.pos.y = G.HEIGHT;
       pins.pop(s);
       addScore(1);
     }
     else if (abs(11.7*G.WIDTH/13 - s.pos.x) < 4.9 && abs(3.1*G.HEIGHT/16 - s.pos.y) < 4.9) { //top-right
+      s.pos.x = G.WIDTH;
+      s.pos.y = G.HEIGHT;
       pins.pop(s);
       addScore(1);
     }
     else if (abs(1.4*G.WIDTH/13 - s.pos.x) < 4.9 && abs(14.9*G.HEIGHT/16 - s.pos.y) < 4.9) { //bottom-left
+      s.pos.x = G.WIDTH;
+      s.pos.y = G.HEIGHT;
       pins.pop(s);
       addScore(1);
     }
     else if (abs(11.7*G.WIDTH/13 - s.pos.x) < 4.9 && abs(14.9*G.HEIGHT/16 - s.pos.y) < 4.9) { //bottom-right
+      s.pos.x = G.WIDTH;
+      s.pos.y = G.HEIGHT;
       pins.pop(s);
       addScore(1);
     }
